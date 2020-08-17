@@ -6,6 +6,7 @@ import Aux from '../../hoc/Aux/Aux';
 
 // components
 import TimerControls from '../../components/TimerControls/TimerControls';
+import TimerButtons from '../../components/TimerControls/TimerButtons/TimerButtons';
 
 class Pomo extends Component {
     render ()  {

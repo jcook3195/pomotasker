@@ -1,3 +1,7 @@
 .controls_container {
     display: flex;
+
+    &.control_buttons {
+        justify-content: center;
+    }
 }

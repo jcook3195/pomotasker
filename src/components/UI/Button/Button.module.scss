@@ -1,0 +1,32 @@
+@import '../../../variables.scss';
+
+.btn {
+    padding: 12px;
+    border-radius: 3px;
+    border: 1px solid;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+
+    &.primary {
+        border-color: $red;
+        color: #fff;
+        background-color: $red;
+
+        &:hover {
+            color: $red;
+            background-color: #fff;
+        }
+    }
+
+    &.secondary {
+        border-color: $mBlue;
+        color: #fff;
+        background-color: $mBlue;
+
+        &:hover {
+            color: $mBlue;
+            background-color: #fff;
+        }
+    }
+}

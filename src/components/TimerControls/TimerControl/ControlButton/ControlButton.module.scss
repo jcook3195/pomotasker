@@ -1,0 +1,21 @@
+@import '../../../../variables.scss';
+
+.ctrl_btn {
+    transition: .2s;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &.plus {
+        &:hover {
+            color: $mBlue;
+        }
+    }
+
+    &.minus {
+        &:hover {
+            color: $red;
+        }
+    }
+}
