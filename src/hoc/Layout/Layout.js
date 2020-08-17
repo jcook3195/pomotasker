@@ -3,7 +3,7 @@ import React, { Component }  from 'react';
 
 import Aux from '../Aux/Aux';
 
-import classes from './Layout.scss';
+import classes from './Layout.module.scss';
 
 class Layout extends Component {
     render () {
