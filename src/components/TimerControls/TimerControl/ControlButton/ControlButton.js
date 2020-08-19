@@ -5,9 +5,12 @@ import React from 'react';
 import classes from './ControlButton.module.scss';
 
 const controlButton = (props) => (
-    <span className={[classes.ctrl_btn, classes[props.cssClass]].join(' ')}>
+    <button 
+        className={[classes.ctrl_btn, classes[props.cssClass]].join(' ')}
+        onClick={props.plusMinus ? props.added : props.removed}
+        disabled={props.disabled}>
         {props.plusMinus ? '+' : '-'}
-    </span>
+    </button>
 );
 
 export default controlButton;

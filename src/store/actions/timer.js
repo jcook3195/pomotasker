@@ -10,7 +10,7 @@ export const setTimerStart = () => {
 };
 
 export const setTimerSuccess = (timerVals) => {
-    console.log(timerVals);
+    //console.log(timerVals);
     return {
         type: actionTypes.SET_TIMER_SUCCESSS,
         vals: timerVals
@@ -35,5 +35,21 @@ export const setTimer = () => {
             .catch(err => {
                 dispatch(setTimerFail(err));
             });
+    };
+};
+
+// UPDATE TIMER VALS
+
+export const addToTimerControl = (type) => {
+    return {
+        type: actionTypes.ADD_TO_TIMER_CONTROL,
+        ctrlType: type
+    };
+};
+
+export const removeFromTimerControl = (type) => {
+    return {
+        type: actionTypes.SUBTRACT_FROM_TIMER_CONTROL,
+        ctrlType: type
     };
 };

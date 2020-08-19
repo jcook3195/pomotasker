@@ -1,5 +1,5 @@
 // packages
-import React from 'react';
+import React, { Component } from 'react';
 
 // hoc
 import Aux from '../../hoc/Aux/Aux';
@@ -11,23 +11,36 @@ import TimerButtons from './TimerButtons/TimerButtons';
 // css
 import classes from './TimerControls.module.scss';
 
-const timerControl = (props) => (
-    <Aux>
-        <div className={classes.controls_container}>
-            <TimerControl 
-                label="Work Time"
-                controlValue={props.work} />
-            <TimerControl
-                label="Break Time" 
-                controlValue={props.break} />
-            <TimerControl 
-                label="Cycles"
-                controlValue={props.cycles} />        
-        </div>
-        <div className={[classes.controls_container, classes.control_buttons].join(' ')}>
-            <TimerButtons />
-        </div>        
-    </Aux>      
-);
+class TimerControls extends Component {    
+    render () {
+        const controls = [
+            { label: 'Work Time', value: this.props.work, type: 'workTime'},
+            { label: 'Break Time', value: this.props.break, type: 'breakTime'},
+            { label: 'Cycles', value: this.props.cycles, type: 'cycles'}
+        ];
 
-export default timerControl;
+        return (
+            <Aux>
+                <div className={classes.controls_container}>
+                    {controls.map(ctrl => (
+                        <TimerControl 
+                            key={ctrl.label}
+                            label={ctrl.label}
+                            controlValue={ctrl.value}
+                            type={ctrl.type}
+                            /*added={() => this.props.valueAdded(ctrl.type)}
+                            removed={() => this.props.valueRemoved(ctrl.type)}*/
+                            added={this.props.valueAdded}
+                            removed={this.props.valueRemoved}
+                            disabled={this.props.disabled[ctrl.type]} />
+                    ))}      
+                </div>
+                <div className={[classes.controls_container, classes.control_buttons].join(' ')}>
+                    <TimerButtons />
+                </div>        
+            </Aux>  
+        );
+    }
+}
+
+export default TimerControls;

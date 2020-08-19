@@ -14,11 +14,17 @@ const timerControl = (props) => (
         <ControlLabel>{props.label}</ControlLabel>
         <h3>
             <ControlButton 
-                plusMinus={false} 
-                cssClass="minus" /> 
+                plusMinus={false}
+                added={() => props.added(props.type)} 
+                removed={() => props.removed(props.type)}
+                cssClass="minus"
+                disabled={props.disabled} /> 
             <ControlValue>{props.controlValue}</ControlValue> 
             <ControlButton 
                 plusMinus={true}
+                added={() => props.added(props.type)} 
+                removed={() => props.removed(props.type)}
+                addRemove={props.added}
                 cssClass="plus" />
         </h3>        
     </div>
