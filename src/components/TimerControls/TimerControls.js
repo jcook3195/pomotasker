@@ -16,13 +16,13 @@ const timerControl = (props) => (
         <div className={classes.controls_container}>
             <TimerControl 
                 label="Work Time"
-                controlValue={25} />
+                controlValue={props.work} />
             <TimerControl
                 label="Break Time" 
-                controlValue={5} />
+                controlValue={props.break} />
             <TimerControl 
                 label="Cycles"
-                controlValue={4} />        
+                controlValue={props.cycles} />        
         </div>
         <div className={[classes.controls_container, classes.control_buttons].join(' ')}>
             <TimerButtons />

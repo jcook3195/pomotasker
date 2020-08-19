@@ -1,0 +1,3 @@
+export const SET_TIMER_START = 'SET_TIMER_START';
+export const SET_TIMER_SUCCESSS = 'SET_TIMER_SUCCESSS';
+export const SET_TIMER_FAIL = 'SET_TIMER_FAIL';
