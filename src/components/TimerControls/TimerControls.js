@@ -28,15 +28,16 @@ class TimerControls extends Component {
                             label={ctrl.label}
                             controlValue={ctrl.value}
                             type={ctrl.type}
-                            /*added={() => this.props.valueAdded(ctrl.type)}
-                            removed={() => this.props.valueRemoved(ctrl.type)}*/
                             added={this.props.valueAdded}
                             removed={this.props.valueRemoved}
-                            disabled={this.props.disabled[ctrl.type]} />
+                            disabled={this.props.disabled[ctrl.type]}
+                            disableBoth={this.props.disableBoth} />
                     ))}      
                 </div>
                 <div className={[classes.controls_container, classes.control_buttons].join(' ')}>
-                    <TimerButtons />
+                    <TimerButtons
+                        start={() => this.props.startTimer()}
+                        pause={() => this.props.pauseTimer()} />
                 </div>        
             </Aux>  
         );

@@ -1,7 +1,11 @@
 export {
     setTimer,
     addToTimerControl,
-    removeFromTimerControl
+    removeFromTimerControl,
+    startTimer,
+    timerDecrement,
+    pauseTimer,
+    timeEnd
 } from './timer';
 
 export {

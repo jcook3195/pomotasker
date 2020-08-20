@@ -10,7 +10,6 @@ export const setTimerStart = () => {
 };
 
 export const setTimerSuccess = (timerVals) => {
-    //console.log(timerVals);
     return {
         type: actionTypes.SET_TIMER_SUCCESSS,
         vals: timerVals
@@ -34,6 +33,7 @@ export const setTimer = () => {
             })
             .catch(err => {
                 dispatch(setTimerFail(err));
+                console.log(err);
             });
     };
 };
@@ -52,4 +52,31 @@ export const removeFromTimerControl = (type) => {
         type: actionTypes.SUBTRACT_FROM_TIMER_CONTROL,
         ctrlType: type
     };
+};
+
+// START AND PAUSE TIMER
+
+export const startTimer = (id) => {
+    return {
+        type: actionTypes.START_TIMER,
+        timerId: id
+    };
+};
+
+export const timerDecrement = () => {
+    return {
+        type: actionTypes.TIMER_DECREMENT
+    };
+};
+
+export const pauseTimer = () => {
+    return {
+        type: actionTypes.PAUSE_TIMER
+    };
+};
+
+export const timeEnd = () => {
+    return {
+        type: actionTypes.TIME_END
+    }
 };

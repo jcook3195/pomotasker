@@ -18,14 +18,17 @@ const timerControl = (props) => (
                 added={() => props.added(props.type)} 
                 removed={() => props.removed(props.type)}
                 cssClass="minus"
-                disabled={props.disabled} /> 
+                disabled={props.disabled} 
+                disableBoth={props.disableBoth} /> 
             <ControlValue>{props.controlValue}</ControlValue> 
             <ControlButton 
                 plusMinus={true}
                 added={() => props.added(props.type)} 
                 removed={() => props.removed(props.type)}
                 addRemove={props.added}
-                cssClass="plus" />
+                cssClass="plus"
+                disabled={props.disableBothButtons} 
+                disableBoth={props.disableBoth} />
         </h3>        
     </div>
        

@@ -8,7 +8,7 @@ const controlButton = (props) => (
     <button 
         className={[classes.ctrl_btn, classes[props.cssClass]].join(' ')}
         onClick={props.plusMinus ? props.added : props.removed}
-        disabled={props.disabled}>
+        disabled={props.disabled || props.disableBoth}>
         {props.plusMinus ? '+' : '-'}
     </button>
 );

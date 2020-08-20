@@ -16,7 +16,7 @@ const timerButtons = (props) => (
             <Button
                 disabled={false}
                 btnType="primary"
-                clicked={() => console.log('clicked')}>
+                clicked={props.start}>
                     Start Timer
             </Button>
         </div>
@@ -24,7 +24,7 @@ const timerButtons = (props) => (
             <Button
                 disabled={false}
                 btnType="secondary"
-                clicked={() => console.log('clicked')}>
+                clicked={props.pause}>
                     Pause Timer
             </Button>
         </div>

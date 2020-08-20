@@ -5,12 +5,12 @@ import React from 'react';
 import classes from './Button.module.scss';
 
 const button = (props) => (
-    <a 
+    <button 
         disabled={props.disabled}
         className={[classes.btn, classes[props.btnType]].join(' ')}
         onClick={props.clicked}>
         {props.children}
-    </a>
+    </button>
 );
 
 export default button;
