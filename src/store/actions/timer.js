@@ -80,3 +80,10 @@ export const timeEnd = () => {
         type: actionTypes.TIME_END
     }
 };
+
+export const resetTimer = (mins) => {
+    return {
+        type: actionTypes.RESET_TIMER,
+        minVal: mins
+    }
+};

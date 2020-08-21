@@ -9,3 +9,4 @@ export const START_TIMER = 'START_TIMER';
 export const TIMER_DECREMENT = 'TIMER_DECREMENT';
 export const PAUSE_TIMER = 'PAUSE_TIMER';
 export const TIME_END = 'TIME_END';
+export const RESET_TIMER = 'RESET_TIMER';

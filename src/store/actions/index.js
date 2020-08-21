@@ -5,7 +5,8 @@ export {
     startTimer,
     timerDecrement,
     pauseTimer,
-    timeEnd
+    timeEnd,
+    resetTimer
 } from './timer';
 
 export {

@@ -15,6 +15,10 @@ import Loader from '../../components/UI/Loader/Loader';
 import * as actions from '../../store/actions/index';
 
 class Pomo extends Component {
+    state = {
+        minsVal: 25
+    }
+
     componentDidMount() {
         this.props.onSetTimer();       
     }
@@ -35,6 +39,11 @@ class Pomo extends Component {
         this.props.pauseTimer();
     }
 
+    resetTimer = () => {
+        clearInterval(this.props.timerId);
+        this.props.resetTimer(this.state.minsVal);
+    }
+
     render ()  {
         const disabled = {
             ...this.props.controlVals
@@ -44,10 +53,24 @@ class Pomo extends Component {
             disabled[key] = disabled[key] <= 0;
         }
 
+        // both buttons are value controls, not start/play
         let disableBothButtons = false;
+        let disableStartButton = false;
+        let disablePauseButton = true;
+        let disableResetButton = true;
         if(this.props.timerOn) {
             disableBothButtons = true;
-        }
+            disableStartButton = true;
+            disablePauseButton = false;
+            disableResetButton = false;
+        } else if(this.props.paused) {
+            disableBothButtons = true;
+            disableResetButton = false;
+        } else if(this.props.ended) {
+            disableResetButton = true;
+        } else if(this.props.reset) {
+            disableResetButton = true;
+        }      
 
         let controls = <Loader />;
         if(!this.props.loading) {                        
@@ -65,8 +88,12 @@ class Pomo extends Component {
                         valueRemoved={this.props.onControlValueRemoved}
                         startTimer={this.props.timerStart}
                         pauseTimer={this.pauseTimer}
+                        resetTimer={this.resetTimer}
                         disabled={disabled}
-                        disableBoth={disableBothButtons} />
+                        disableBoth={disableBothButtons}
+                        disableStart={disableStartButton}
+                        disablePause={disablePauseButton}
+                        disableReset={disableResetButton} />
                 </Aux>                
             );
         }
@@ -87,6 +114,8 @@ const mapStateToProps = state => {
         loading: state.timer.loading,
         timerOn: state.timer.timerOn,
         timerId: state.timer.timerId,
+        paused: state.timer.timerPaused,
+        reset: state.timer.wasReset,
         ended: state.timer.timerEnded
     };
 };
@@ -101,7 +130,8 @@ const mapDispatchToProps = dispatch => {
             dispatch(actions.startTimer(timerId));
         },
         pauseTimer: () => dispatch(actions.pauseTimer()),
-        timeEnd: () => dispatch(actions.timeEnd())
+        timeEnd: () => dispatch(actions.timeEnd()),
+        resetTimer: () => dispatch(actions.resetTimer())
     };
 };
 

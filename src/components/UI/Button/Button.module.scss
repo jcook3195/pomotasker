@@ -29,4 +29,18 @@
             background-color: #fff;
         }
     }
+
+    &:disabled {
+        opacity: .6 !important;
+        color: #eee !important;
+        border-color: #eee !important;
+        background-color: #ccc;
+
+        &:hover {
+            cursor: not-allowed !important;
+            color: #eee !important;
+            border-color: #eee !important;
+            background-color: #ccc;
+        }
+    }
 }

@@ -5,11 +5,13 @@ const initialState = {
     vals: [],
     minutes: 25,
     seconds: 0,
+    minsOnStart: 0,
     timerOn: false,
     timerId: null,
     loading: false,
-    timerEnded: false,
-    displayMsg: "Timer is done!"
+    timerPaused: false,
+    wasReset: false,
+    timerEnded: false
 };
 
 // setting the timer control values
@@ -32,12 +34,18 @@ const setTimerFail = (state, action) => {
 const addToTimerControl = (state, action) => {
     const updatedControlValue = { [action.ctrlType]: state.vals[action.ctrlType] + 1};
     const updatedCtrlVals = updateObject(state.vals, updatedControlValue);
-    const updatedState = {
-        vals: updatedCtrlVals,
-        minutes: updatedCtrlVals.workTime,
-        seconds: 0,
-        loading: false
-    }
+    let updatedState = {};
+
+    if(action.ctrlType === "workTime") {
+        updatedState = {
+            vals: updatedCtrlVals,
+            minutes: updatedCtrlVals.workTime,
+        }
+    } else {
+        updatedState = {
+            vals: updatedCtrlVals
+        }
+    }    
 
     return updateObject(state, updatedState);
 };
@@ -45,23 +53,42 @@ const addToTimerControl = (state, action) => {
 const removeFromTimerControl = (state, action) => {
     const updatedControlValue = { [action.ctrlType]: state.vals[action.ctrlType] - 1};
     const updatedCtrlVals = updateObject(state.vals, updatedControlValue);
-    const updatedState = {
-        vals: updatedCtrlVals,
-        minutes: updatedCtrlVals.workTime,
-        seconds: 0,
-        loading: false
+    let updatedState = {};
+
+    if(action.ctrlType === "workTime") {
+        updatedState = {
+            vals: updatedCtrlVals,
+            minutes: updatedCtrlVals.workTime,
+        }
+    } else {
+        updatedState = {
+            vals: updatedCtrlVals
+        }
     }
 
     return updateObject(state, updatedState);
 };
 
-// starting and pausing the timer
+// start/pause/reset the timer
 const startTimer = (state, action) => {
-    return updateObject(state, {
-        timerOn: true,
-        timerId: action.timerId,
-        timerEnded: false
-    });
+    if(state.timerPaused) {
+        return updateObject(state, {
+            timerOn: true,
+            timerId: action.timerId,
+            timerPaused: false,
+            wasReset: false,
+            timerEnded: false
+        });
+    } else {
+        return updateObject(state, {
+            minsOnStart: state.minutes,
+            timerOn: true,
+            timerId: action.timerId,
+            timerPaused: false,
+            wasReset: false,
+            timerEnded: false
+        });
+    }    
 }
 
 const timerDecrement = (state, action) => {
@@ -78,14 +105,30 @@ const timerDecrement = (state, action) => {
 };
 
 const pauseTimer = (state, action) => {
-    return updateObject(state, {timerOn: false});
+    return updateObject(state, {
+        timerOn: false,
+        timerPaused: true
+    });
 };
 
 const timeEnd = (state, action) => {
     return updateObject(state, {
         timerOn: false,
+        timerPaused: false,
         timerEnded: true
     });
+}
+
+const resetTimer = (state, action) => {
+    const updatedState = {
+        minutes: state.minsOnStart,
+        seconds: 0,
+        timerOn: false,
+        timerPaused: false,
+        wasReset: true
+    }
+
+    return updateObject(state, updatedState);
 }
 
 const reducer = (state = initialState, action) => {
@@ -99,6 +142,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.TIMER_DECREMENT: return timerDecrement(state, action);
         case actionTypes.PAUSE_TIMER: return pauseTimer(state, action);
         case actionTypes.TIME_END: return timeEnd(state, action);
+        case actionTypes.RESET_TIMER: return resetTimer(state, action);
         default: return state;
     }
 };

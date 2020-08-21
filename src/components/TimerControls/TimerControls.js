@@ -37,7 +37,11 @@ class TimerControls extends Component {
                 <div className={[classes.controls_container, classes.control_buttons].join(' ')}>
                     <TimerButtons
                         start={() => this.props.startTimer()}
-                        pause={() => this.props.pauseTimer()} />
+                        pause={() => this.props.pauseTimer()}
+                        reset={() => this.props.resetTimer()}
+                        disableStart={this.props.disableStart}
+                        disablePause={this.props.disablePause}
+                        disableReset={this.props.disableReset} />
                 </div>        
             </Aux>  
         );

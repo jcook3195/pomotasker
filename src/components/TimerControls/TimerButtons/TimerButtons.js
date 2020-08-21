@@ -14,7 +14,7 @@ const timerButtons = (props) => (
     <Aux>
         <div className={classes.timer_button}>
             <Button
-                disabled={false}
+                disabled={props.disableStart}
                 btnType="primary"
                 clicked={props.start}>
                     Start Timer
@@ -22,11 +22,19 @@ const timerButtons = (props) => (
         </div>
         <div className={classes.timer_button}>
             <Button
-                disabled={false}
+                disabled={props.disablePause}
                 btnType="secondary"
                 clicked={props.pause}>
                     Pause Timer
             </Button>
+        </div>
+        <div className={classes.timer_button}>
+            <Button
+                disabled={props.disableReset}
+                btnType="primary"
+                clicked={props.reset}>
+                    Reset Timer
+                </Button>
         </div>
     </Aux>    
 );
