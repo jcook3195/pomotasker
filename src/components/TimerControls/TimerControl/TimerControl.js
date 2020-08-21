@@ -12,7 +12,7 @@ import classes from './TimerControl.module.scss';
 const timerControl = (props) => (
     <div className={classes.control}>
         <ControlLabel>{props.label}</ControlLabel>
-        <h3>
+        <h3 className={classes.control_value}>
             <ControlButton 
                 plusMinus={false}
                 added={() => props.added(props.type)} 

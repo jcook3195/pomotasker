@@ -9,7 +9,9 @@ const controlButton = (props) => (
         className={[classes.ctrl_btn, classes[props.cssClass]].join(' ')}
         onClick={props.plusMinus ? props.added : props.removed}
         disabled={props.disabled || props.disableBoth}>
-        {props.plusMinus ? '+' : '-'}
+            <span>
+                {props.plusMinus ? '+' : String.fromCharCode(8722)}
+            </span>
     </button>
 );
 

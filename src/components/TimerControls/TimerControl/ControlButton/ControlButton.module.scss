@@ -1,21 +1,37 @@
 @import '../../../../variables.scss';
 
 .ctrl_btn {
+    height: 28px;
+    width: 28px;
+    font-size: 1.6rem;
+    border: none;
+    color: #fff;
     transition: .2s;
+    border-radius: 100%;
+    vertical-align: middle;
 
     &:hover {
         cursor: pointer;
+        opacity: .6;
     }
 
     &.plus {
-        &:hover {
-            color: $mBlue;
-        }
+        background-color: $mBlue;
     }
 
     &.minus {
+        background-color: $red;
+
+        span {
+            line-height: .1;
+            margin-right: -1px;
+        }
+    }
+
+    &:disabled {
+        background-color: #eee !important;
         &:hover {
-            color: $red;
+            cursor: not-allowed !important;
         }
     }
 }

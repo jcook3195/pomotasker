@@ -1,8 +1,11 @@
 // packages
 import React from 'react';
 
+// CSS
+import classes from './ControlValue.module.scss';
+
 const controlValue = (props) => (
-    <span>
+    <span className={classes.ctrl_val}>
         {props.children}
     </span>
 );
