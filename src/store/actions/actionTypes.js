@@ -10,3 +10,18 @@ export const TIMER_DECREMENT = 'TIMER_DECREMENT';
 export const PAUSE_TIMER = 'PAUSE_TIMER';
 export const TIME_END = 'TIME_END';
 export const RESET_TIMER = 'RESET_TIMER';
+
+export const WORK_START = 'WORK_START';
+export const WORK_END = 'WORK_END';
+export const SET_WORK_TIME = 'SET_WORK_TIME';
+
+export const BREAK_START = 'BREAK_START';
+export const BREAK_END = 'BREAK_END';
+export const SET_BREAK_TIME = 'SET_BREAK_TIME';
+
+export const CYCLE_START = 'CYCLE_START';
+export const CYCLE_END = 'CYCLE_END';
+export const NEXT_CYCLE = 'NEXT_CYCLE';
+
+export const ROUND_START = 'ROUND_START';
+export const ROUND_END = 'ROUND_END';

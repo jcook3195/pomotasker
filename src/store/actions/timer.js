@@ -78,7 +78,7 @@ export const pauseTimer = () => {
 export const timeEnd = () => {
     return {
         type: actionTypes.TIME_END
-    }
+    };
 };
 
 export const resetTimer = (mins) => {
@@ -86,4 +86,74 @@ export const resetTimer = (mins) => {
         type: actionTypes.RESET_TIMER,
         minVal: mins
     }
+};
+
+// work actions
+export const workStart = () => {
+    return {
+        type: actionTypes.WORK_START
+    };
+};
+
+export const workEnd = () => {
+    return {
+        type: actionTypes.WORK_END
+    };
+};
+
+export const setWorkTime = () => {
+    return {
+        type: actionTypes.SET_WORK_TIME
+    };
+}
+
+// break actions
+export const breakStart = () => {
+    return {
+        type: actionTypes.BREAK_START
+    };
+};
+
+export const breakEnd = () => {
+    return {
+        type: actionTypes.BREAK_END
+    };
+};
+
+export const setBreakTime = () => {
+    return {
+        type: actionTypes.SET_BREAK_TIME
+    };
+}
+
+// cycle actions
+export const cycleStart = () => {
+    return {
+        type: actionTypes.CYCLE_START
+    };
+};
+
+export const cycleEnd = () => {
+    return {
+        type: actionTypes.CYCLE_END
+    };
+};
+
+export const nextCycle = () => {
+    return {
+        type: actionTypes.NEXT_CYCLE
+    };
+};
+
+// round actions
+export const roundStart = () => {
+    return {
+        type: actionTypes.ROUND_START
+    };
+};
+
+export const roundEnd = () => {
+    return {
+        type: actionTypes.ROUND_END
+    };
 };

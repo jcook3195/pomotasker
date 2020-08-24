@@ -6,7 +6,18 @@ export {
     timerDecrement,
     pauseTimer,
     timeEnd,
-    resetTimer
+    resetTimer,
+    workStart,
+    workEnd,
+    setWorkTime,
+    breakStart,
+    breakEnd,
+    setBreakTime,
+    cycleStart,
+    cycleEnd,
+    nextCycle,
+    roundStart,
+    roundEnd    
 } from './timer';
 
 export {

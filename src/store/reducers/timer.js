@@ -5,13 +5,21 @@ const initialState = {
     vals: [],
     minutes: 25,
     seconds: 0,
+    working: false,
+    breaking: false,
+    cycle: 0,
+    workTime: 25,
+    breakTime: 5,
+    totalCycles: 4,
     minsOnStart: 0,
     timerOn: false,
     timerId: null,
     loading: false,
     timerPaused: false,
     wasReset: false,
-    timerEnded: false
+    timerEnded: false,
+    roundEnded: false,
+    roundTotal: 0
 };
 
 // setting the timer control values
@@ -40,13 +48,24 @@ const addToTimerControl = (state, action) => {
         updatedState = {
             vals: updatedCtrlVals,
             minutes: updatedCtrlVals.workTime,
+            workTime: updatedCtrlVals.workTime
+        }
+    } else if(action.ctrlType === "cycles") {
+        updatedState = {
+            vals: updatedCtrlVals,
+            totalCycles: updatedCtrlVals.cycles
+        }
+    } else if(action.ctrlType === "breakTime")  {
+        updatedState =  {
+            vals: updatedCtrlVals,
+            breakTime: updatedCtrlVals.breakTime
         }
     } else {
         updatedState = {
             vals: updatedCtrlVals
         }
     }    
-
+    
     return updateObject(state, updatedState);
 };
 
@@ -59,6 +78,17 @@ const removeFromTimerControl = (state, action) => {
         updatedState = {
             vals: updatedCtrlVals,
             minutes: updatedCtrlVals.workTime,
+            workTime: updatedCtrlVals.workTime
+        }
+    } else if(action.ctrlType === "cycles") {
+        updatedState = {
+            vals: updatedCtrlVals,
+            totalCycles: updatedCtrlVals.cycles
+        }
+    } else if(action.ctrlType === "breakTime") {
+        updatedState = {
+            vals:  updatedCtrlVals,
+            breakTime: updatedCtrlVals.breakTime
         }
     } else {
         updatedState = {
@@ -71,8 +101,11 @@ const removeFromTimerControl = (state, action) => {
 
 // start/pause/reset the timer
 const startTimer = (state, action) => {
-    if(state.timerPaused) {
+    if(state.cycle === 0) {
         return updateObject(state, {
+            working: true,
+            cycle: state.cycle + 1,
+            minsOnStart: state.minutes,
             timerOn: true,
             timerId: action.timerId,
             timerPaused: false,
@@ -116,16 +149,121 @@ const timeEnd = (state, action) => {
         timerOn: false,
         timerPaused: false,
         timerEnded: true
-    });
+    });   
 }
 
 const resetTimer = (state, action) => {
     const updatedState = {
         minutes: state.minsOnStart,
         seconds: 0,
+        working: false,
+        breaking: false,
+        cycle: 0,
         timerOn: false,
         timerPaused: false,
         wasReset: true
+    }
+
+    return updateObject(state, updatedState);
+}
+
+// work
+const workStart = (state, action) => {
+    const updatedState = {
+        working: true,
+        breaking: false
+    }
+
+    return updateObject(state, updatedState);
+}
+
+const workEnd = (state, action) => {
+    const updatedState = {
+        working: false,
+        timerId: null
+    }
+
+    return updateObject(state, updatedState);
+}
+
+const setWorkTime = (state, action) => {
+    const updatedState = {
+        minutes: state.workTime
+    }
+
+    return updateObject(state, updatedState);
+}
+
+// break
+const breakStart = (state, action) => {
+    const updatedState = {
+        working: false,
+        breaking: true
+    }
+
+    return updateObject(state, updatedState);
+}
+
+const breakEnd = (state, action) => {
+    const updatedState = {
+        breaking: false,
+        timerId: null
+    }
+
+    return updateObject(state, updatedState);
+}
+
+const setBreakTime = (state, action) => {
+    const updatedState = {
+        minutes: state.breakTime
+    }
+
+    return updateObject(state, updatedState);
+}
+
+// cycles
+const cycleStart = (state, action) => {
+    return updateObject(state, state);
+}
+
+const cycleEnd = (state, action) => {
+    return updateObject(state, state);
+}
+
+const nextCycle = (state, action) => {
+    const updatedState = {
+        cycle: state.cycle + 1
+    }
+
+    return updateObject(state, updatedState);
+}
+
+// rounds
+const roundStart = (state, action) => {
+    const updatedState = {
+        roundEnded: false
+    }
+
+    return updateObject(state, updatedState);
+}
+
+const roundEnd = (state, action) => {
+    const updatedState = {
+        minutes: state.minsOnStart,
+        seconds: 0,
+        working: false,
+        breaking: false,
+        cycle: 0,
+        workTime: state.minsOnStart,
+        breakTime: state.vals.breakTime,
+        totalCycles: state.vals.cycles,
+        timerOn: false,
+        timerId: null,
+        timerPaused: false,
+        wasReset: false,
+        timerEnded: true,
+        roundEnded: true,
+        roundTotal: state.roundTotal + 1
     }
 
     return updateObject(state, updatedState);
@@ -143,6 +281,17 @@ const reducer = (state = initialState, action) => {
         case actionTypes.PAUSE_TIMER: return pauseTimer(state, action);
         case actionTypes.TIME_END: return timeEnd(state, action);
         case actionTypes.RESET_TIMER: return resetTimer(state, action);
+        case actionTypes.CYCLE_START: return cycleStart(state, action);
+        case actionTypes.CYCLE_END: return cycleEnd(state, action);
+        case actionTypes.NEXT_CYCLE: return nextCycle(state, action);
+        case actionTypes.ROUND_START: return roundStart(state, action);
+        case actionTypes.ROUND_END: return roundEnd(state, action);
+        case actionTypes.WORK_START: return workStart(state, action);
+        case actionTypes.WORK_END: return workEnd(state, action);
+        case actionTypes.SET_WORK_TIME: return setWorkTime(state, action);
+        case actionTypes.BREAK_START: return breakStart(state, action);
+        case actionTypes.BREAK_END: return breakEnd(state, action);
+        case actionTypes.SET_BREAK_TIME: return setBreakTime(state, action);
         default: return state;
     }
 };
