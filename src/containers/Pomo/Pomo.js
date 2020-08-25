@@ -11,13 +11,16 @@ import Timer from '../../components/UI/Timer/Timer';
 import TimerControls from '../../components/TimerControls/TimerControls';
 import Loader from '../../components/UI/Loader/Loader';
 import Button from '../../components/UI/Button/Button';
+import ActivityLog from '../../components/ActivityLog/ActivityLog';
+import SectionHeader from '../../components/UI/SectionHeader/SectionHeader';
 
 // misc
 import * as actions from '../../store/actions/index';
 
 class Pomo extends Component {
     state = {
-        minsVal: 25
+        minsVal: 25,
+        activityList: []
     }
 
     componentDidMount() {
@@ -34,6 +37,7 @@ class Pomo extends Component {
         if(!this.props.working && !this.props.breaking)  {
             this.roundStart();
             this.cycleStart();
+            this.workStart();
         }
 
         this.props.timerStart();
@@ -59,7 +63,7 @@ class Pomo extends Component {
     }
 
     workEnd = () => {
-        this.props.onWorkEnd();
+        this.props.onWorkEnd(); 
     }
 
     setWorkTime = () => {
@@ -84,6 +88,15 @@ class Pomo extends Component {
 
     cycleEnd = () => {
         this.props.onCycleEnd();
+
+        // Logging activity
+        const activityLog = {
+            round: this.props.roundTotal,
+            cycle: this.props.cycle,
+        };
+
+        this.updateActivityLog(this.state.activityList, activityLog);
+        //this.cL(this.state.activityList);
     }
 
     nextCycle = () => {
@@ -134,6 +147,90 @@ class Pomo extends Component {
         console.log("round ended");
     }
 
+    updateActivityLog = (array, updatedLog) => {
+        array.push(updatedLog);
+        this.cL(this.state.activityList);
+    }
+
+    logActivity = (activityLog) => { 
+        if(activityLog.length === 0) {
+            if(this.props.working) {
+                return (
+                    <ActivityLog 
+                        rounds={1}
+                        cycles={1}
+                        round={1}
+                        cycle={1}
+                        doneWorking={false}
+                        work={true}
+                        doneBreaking={false}
+                        break={false} />    
+                );
+            } else if(this.props.breaking) {
+                return (
+                    <ActivityLog 
+                        rounds={1}
+                        cycles={1}
+                        round={1}
+                        cycle={1}
+                        doneWorking={true}
+                        work={false}
+                        doneBreaking={false}
+                        break={true} />
+                );
+            }
+            return (
+                <ActivityLog 
+                    rounds={1}
+                    cycles={1}
+                    round={1}
+                    cycle={1}
+                    doneWorking={true}
+                    work={false}
+                    doneBreaking={true}
+                    break={false} /> 
+            );
+        } else {                         
+            let workingLog = false;
+            let workingDone = false;
+            let breakingLog = false; 
+            let breakingDone = false;           
+            if(!this.props.working) {
+                workingLog = false;
+                workingDone = true;
+            } else {
+                workingLog = true;
+                workingDone = false;
+            }
+            if(!this.props.breaking) {
+                breakingLog = false;
+                if(this.props.working) {
+                    breakingDone = false;
+                } else {
+                    breakingDone = true;
+                }
+            } else {
+                breakingLog = true;
+                breakingDone = false;              
+            }
+
+            return (<ActivityLog
+                        rounds={this.props.roundTotal}
+                        cycles={this.props.cycle}
+                        round={this.props.roundTotal}
+                        cycle={this.props.cycle}
+                        doneWorking={workingDone}
+                        work={workingLog}
+                        doneBreaking={breakingDone}
+                        break={breakingLog} />);
+        }
+    }
+
+    cL = (param) => {
+        console.log("This is the console.log helper function...");
+        console.log(param);
+    }
+
     render ()  {
         const disabled = {
             ...this.props.controlVals
@@ -162,9 +259,9 @@ class Pomo extends Component {
             disableResetButton = true;
         }    
         
-        let activityLog = <p>Complete a Pomodoro cycle for an activity log.</p>;
-        if(this.props.roundEnded) {
-            activityLog = <p>You completed a round! Round count: {this.props.roundTotal}</p>
+        let activityLog = <p>No activity yet for this session.</p>;
+        if(this.props.timerOn || this.props.roundEnded) {
+            activityLog = this.logActivity(this.state.activityList);
         }
 
         let controls = <Loader />;
@@ -189,7 +286,7 @@ class Pomo extends Component {
                         disableStart={disableStartButton}
                         disablePause={disablePauseButton}
                         disableReset={disableResetButton} />     
-                    <Button clicked={this.resetTimer}>Stop</Button>   
+                    <SectionHeader>Activity</SectionHeader>
                     {activityLog}                
                 </Aux>                
             );

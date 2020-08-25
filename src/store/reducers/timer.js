@@ -241,7 +241,8 @@ const nextCycle = (state, action) => {
 // rounds
 const roundStart = (state, action) => {
     const updatedState = {
-        roundEnded: false
+        roundEnded: false,
+        roundTotal: state.roundTotal + 1
     }
 
     return updateObject(state, updatedState);
@@ -262,8 +263,7 @@ const roundEnd = (state, action) => {
         timerPaused: false,
         wasReset: false,
         timerEnded: true,
-        roundEnded: true,
-        roundTotal: state.roundTotal + 1
+        roundEnded: true
     }
 
     return updateObject(state, updatedState);
