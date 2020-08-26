@@ -10,12 +10,12 @@ import Aux from '../../hoc/Aux/Aux';
 import Timer from '../../components/UI/Timer/Timer';
 import TimerControls from '../../components/TimerControls/TimerControls';
 import Loader from '../../components/UI/Loader/Loader';
-import Button from '../../components/UI/Button/Button';
 import ActivityLog from '../../components/ActivityLog/ActivityLog';
 import SectionHeader from '../../components/UI/SectionHeader/SectionHeader';
 
 // misc
 import * as actions from '../../store/actions/index';
+// import { cL } from '../../shared/utility';
 
 class Pomo extends Component {
     state = {
@@ -30,7 +30,7 @@ class Pomo extends Component {
     componentDidUpdate() {
         if(this.props.timerMins === 0 && this.props.timerSeconds === 0) {  
             this.cycleController();
-        }        
+        }         
     }
 
     startTimer = () => {
@@ -96,7 +96,6 @@ class Pomo extends Component {
         };
 
         this.updateActivityLog(this.state.activityList, activityLog);
-        //this.cL(this.state.activityList);
     }
 
     nextCycle = () => {
@@ -121,7 +120,6 @@ class Pomo extends Component {
             this.cycleStart();
             this.breakStart();
             this.startTimer();
-            console.log("Working end, work cycle: " + this.props.cycle);
         } else if(this.props.breaking) {
             // if breaking, cycle increases & transitions to working               
             this.stopTimer();
@@ -134,7 +132,6 @@ class Pomo extends Component {
                 this.setWorkTime();
                 this.workStart();
                 this.startTimer();
-                console.log("Breaking end, break cycle: " + this.props.cycle);
             }                                
         } 
     }
@@ -149,7 +146,6 @@ class Pomo extends Component {
 
     updateActivityLog = (array, updatedLog) => {
         array.push(updatedLog);
-        this.cL(this.state.activityList);
     }
 
     logActivity = (activityLog) => { 
@@ -226,11 +222,6 @@ class Pomo extends Component {
         }
     }
 
-    cL = (param) => {
-        console.log("This is the console.log helper function...");
-        console.log(param);
-    }
-
     render ()  {
         const disabled = {
             ...this.props.controlVals
@@ -270,7 +261,8 @@ class Pomo extends Component {
                 <Aux>
                     <Timer
                         minutes={this.props.timerMins}
-                        seconds={this.props.timerSeconds} />
+                        seconds={this.props.timerSeconds}
+                        dArray={this.props.dArray} />
                     <TimerControls
                         values={this.props.controlVals}
                         break={this.props.controlVals.breakTime}
@@ -317,7 +309,8 @@ const mapStateToProps = state => {
         reset: state.timer.wasReset,
         ended: state.timer.timerEnded,
         roundEnded: state.timer.roundEnded,
-        roundTotal: state.timer.roundTotal
+        roundTotal: state.timer.roundTotal,
+        dArray: state.timer.dArray
     };
 };
 
@@ -327,7 +320,10 @@ const mapDispatchToProps = dispatch => {
         onControlValueAdded: (ctrlName) => dispatch(actions.addToTimerControl(ctrlName)),
         onControlValueRemoved: (ctrlName) => dispatch(actions.removeFromTimerControl(ctrlName)),
         timerStart: () => {
-            const timerId = setInterval(() => dispatch(actions.timerDecrement()), 10);            
+            const timerId = setInterval(() => {
+                dispatch(actions.timerDecrement());
+                dispatch(actions.decrementDasharray());
+            }, 1000);            
             dispatch(actions.startTimer(timerId));
         },
         pauseTimer: () => dispatch(actions.pauseTimer()),

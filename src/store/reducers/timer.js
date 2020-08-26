@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../../shared/utility';
+import { updateObject, calculateTimeFraction } from '../../shared/utility';
 
 const initialState = {
     vals: [],
@@ -19,7 +19,9 @@ const initialState = {
     wasReset: false,
     timerEnded: false,
     roundEnded: false,
-    roundTotal: 0
+    roundTotal: 0,
+    dArray: '283 283',
+    fullArray: 283
 };
 
 // setting the timer control values
@@ -269,6 +271,17 @@ const roundEnd = (state, action) => {
     return updateObject(state, updatedState);
 }
 
+// circle
+const decrementDasharray = (state, action) => {
+    const circleDasharray = (calculateTimeFraction(state.minutes, state.seconds, state.minsOnStart) * state.fullArray).toFixed(0) + ' 283';
+    //console.log(circ);
+    const updatedState = {
+        dArray: circleDasharray
+    }
+
+    return updateObject(state, updatedState);
+}
+
 const reducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.SET_TIMER_START: return setTimerStart(state, action);
@@ -292,6 +305,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.BREAK_START: return breakStart(state, action);
         case actionTypes.BREAK_END: return breakEnd(state, action);
         case actionTypes.SET_BREAK_TIME: return setBreakTime(state, action);
+        case actionTypes.DECREMENT_DASHARRAY: return decrementDasharray(state, action);
         default: return state;
     }
 };

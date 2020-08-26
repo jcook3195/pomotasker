@@ -17,7 +17,8 @@ export {
     cycleEnd,
     nextCycle,
     roundStart,
-    roundEnd    
+    roundEnd,
+    decrementDasharray
 } from './timer';
 
 export {

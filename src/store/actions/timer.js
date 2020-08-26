@@ -157,3 +157,10 @@ export const roundEnd = () => {
         type: actionTypes.ROUND_END
     };
 };
+
+// dash array for circle timer updating
+export const decrementDasharray = () => {
+    return {
+        type: actionTypes.DECREMENT_DASHARRAY
+    };
+};

@@ -25,3 +25,5 @@ export const NEXT_CYCLE = 'NEXT_CYCLE';
 
 export const ROUND_START = 'ROUND_START';
 export const ROUND_END = 'ROUND_END';
+
+export const DECREMENT_DASHARRAY = 'DECREMENT_DASHARRAY';
