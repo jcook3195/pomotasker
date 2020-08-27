@@ -17,7 +17,7 @@ class Layout extends Component {
             <Aux>
                 <div className={classes.container}>
                     <h1>Pomotasker</h1>
-                    <Pomo />
+                    {this.props.children}
                 </div>
             </Aux>
         )

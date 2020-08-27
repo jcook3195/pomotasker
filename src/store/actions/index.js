@@ -22,5 +22,8 @@ export {
 } from './timer';
 
 export {
-
+    auth,
+    logout,
+    setAuthRedirectPath,
+    authCheckState
 } from './auth';

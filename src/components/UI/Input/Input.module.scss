@@ -1,0 +1,33 @@
+@import '../../../variables.scss';
+
+.input {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+
+    .label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .input_element {
+        outline: none;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        font: inherit;
+        padding: 8px 12px;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    
+        &:focus {
+            outline: none;
+            background-color: non;
+        }
+    
+        &.invalid {
+            border: 1px solid $red;
+        }
+    }
+}
